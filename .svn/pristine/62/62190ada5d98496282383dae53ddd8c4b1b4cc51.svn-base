@@ -1,9 +1,0 @@
-@*Team Page for Admin/Owner*@
-
-@(listActive : List[Users],listStatus : List[Status])
-
-@defining(play.core.PlayVersion.current) { version =>
-
-	@Team(listActive,listStatus)
-	<a href=@routes.TeamController.editTeam><button type="submit" id="bedit"></button></a>
-}

@@ -1,8 +1,0 @@
-@*Content Home Page*@
-
-@(resume : String, name : String)
-@defining(play.core.PlayVersion.current) { version =>
-	@Home(resume,name)
-	
-	<a href=@routes.HomeController.editHome><button type="submit" id="bedit"></button></a>
-}

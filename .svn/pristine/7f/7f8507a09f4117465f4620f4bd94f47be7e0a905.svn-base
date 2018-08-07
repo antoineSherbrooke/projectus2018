@@ -1,9 +1,0 @@
-@*PwChange*@
-
-@(message: String)(id : String)
-
-@Title(message) {
-	@Header()
-    @ContentPwChange(id)
-	@Footer()
-}

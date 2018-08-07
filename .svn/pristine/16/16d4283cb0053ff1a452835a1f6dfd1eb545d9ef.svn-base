@@ -1,7 +1,0 @@
-@* Person Template File *@
-@(truc: String)
-
-<p>Lu</p>
-
-<p>@truc </p>
-

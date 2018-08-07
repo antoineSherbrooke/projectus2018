@@ -1,9 +1,0 @@
-@*Login*@
-
-@(message: String)
-
-@Title(message) {
-	@Header()
-    @ContentLogin()
-	@Footer()
-}
