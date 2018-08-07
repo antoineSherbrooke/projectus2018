@@ -1,0 +1,38 @@
+@*Content Register*@
+
+@(listStatus : List[Status])
+@defining(play.core.PlayVersion.current) { version =>
+
+	<h1 id="lregisterpage"></h1>
+		
+    @helper.form(routes.RegisterController.registerFormValidation) {
+    @helper.CSRF.formField
+        <div class="champsFormulaire"><h2 id="lcip"></h2><input type="text" name="cip"></div>
+        <div class="champsFormulaire"><h2 id="lfirstname"></h2><input type="text" name="firstName"></div>
+        <div class="champsFormulaire"><h2 id="llastname"></h2><input type="text" name="lastName"></div>
+        <div class="champsFormulaire"><h2 id="lemail"></h2><input type="mail" name="mail"></div>
+	  	<div class="champsFormulaire"><h2 id="lpassword"></h2><input type="password" name="password"></div>
+        </br>
+        <div class="posts">
+        	<div class="champsFormulaire">
+        		<h2 id="lstatus"></h2>
+		        <select name="status">
+			        @for(status <- listStatus) {
+			         	<option id="status" value=@status.getName()>@status.getName()</option>
+			        }
+			    </select>
+	        </div>
+	        
+	        <div class="champsFormulaire" id="divrole">
+	        	<h2 id="lrole"></h2>
+	        	<div class="radioButtonForm">
+	        		<input type="radio" name="role" value="administrator"><h3 id="ladmin"></h3>
+					<input type="radio" name="role" value="owner"><h3 id="lowner"></h3>
+					<input type="radio" name="role" value="user" checked="checked"><h3 id="luser"></h3>
+	        	</div>
+	        </div>
+        </div>
+
+        <button type="submit" id="bregister"></button>
+    }
+}

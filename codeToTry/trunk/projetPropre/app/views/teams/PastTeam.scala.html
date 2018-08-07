@@ -1,0 +1,24 @@
+@*Team Page for User/Not Logged*@
+
+@(listInactive : List[Users],listStatus : List[Status])
+
+@defining(play.core.PlayVersion.current) { version =>
+	<h1 id="lpastteampage"></h1>
+	<div id="teamList">
+		@for(status <- listStatus) {
+			<h2>@status.getName()</h2>
+			<div class="teamElement">
+				@for(membre <- listInactive) {
+					@if(status==membre.getStatus()) {
+						<div class="userTeam">
+		       				<a href=@routes.ProfileController.profile(membre.getCip())><h3>@membre.getFirstName() @membre.getLastName()</h3></a>
+		        			<a href="mailto:@membre.getMail()">@membre.getMail()</a>
+	        			</div>
+	        		
+	        		}
+	        	}
+	       	</div>
+		}
+	</div>
+	<a href=@routes.TeamController.team><button type="submit" id="bactualmembers"></button></a>
+}

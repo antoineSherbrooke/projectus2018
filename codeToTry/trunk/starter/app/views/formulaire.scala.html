@@ -1,0 +1,28 @@
+@* formulaire Template File *@
+@(form: Form[PersonData])
+    @* Global errors are not tied to any particular form field *@
+	
+	
+	@if(session.get("name")==null){
+		
+	    @helper.form(routes.PersonController.fait) {
+	        @helper.CSRF.formField
+	
+	        @helper.inputText(form("name"))
+	    	@helper.inputPassword(form("mdp"))
+	
+	        <button type="submit">Connection</button>
+	    }
+	}else{
+		<h1>Bonjour @session.get("name") </h1>
+		<h>Mot de passe @session.get("mdp") </h1>
+	}
+
+    <div>
+      <ul>
+        @if(session.get("name")!=null) {
+	        <li>Please go to <a href="@routes.PersonController.deconnection">Deconnection</a></li>
+   		 }
+      </ul>
+
+    </div>

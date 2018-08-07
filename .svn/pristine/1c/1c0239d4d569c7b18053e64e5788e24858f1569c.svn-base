@@ -1,0 +1,109 @@
+@import models.BacklogEntries.EnumFirstEstimate;
+@import models.BacklogEntries.EnumPriority;
+@import models.Members.EnumMem;
+@import paths.Icon;
+
+@(feature:BacklogEntries)(editable:Boolean)
+ 
+ <!-- Modal content-->
+ <div id="header-feature" class="modal-header" data="@feature.getId">
+ 	<button type="button" class="close" data-dismiss="modal">&times;</button>
+    <div class="modal-title" >
+        <div class="col-lg-12">
+            <h4 class="infoName">
+                <strong>Feature :</strong>
+                <span class='featureName'>@feature.getName()</span>
+                @if(SessionController.authorization(EnumMem.PRODUCT_OWNER) && editable){
+                    <input class="featureName input font-25 none" type="text" value="@feature.getName()">
+                    <a class="featureName" title="Edit" href="#"><img src="@routes.Assets.versioned(Icon.edit)" width="25" height="25" style="margin-right:5px;"/></a>
+                }
+            </h4>
+        </div>
+        <div class="error featureName"></div>
+
+    </div>
+</div>
+        
+<div  class="modal-body" style="padding-top:0px;">
+    <div class="col-lg-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Feature Infos</h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-12">
+                    <table class="table no-line2">
+                        <tr>
+                            <td><strong>Sprints :</strong>
+                                @if(!feature.getSprints().isEmpty()){
+                                    @for(sprint <- feature.getSprints()){
+                                        @sprint.getName()
+                                        @if(feature.getSprints.get(feature.getSprints.size() -1) != sprint){
+                                            ,
+                                        }
+                                    }
+                                }else{
+                                <span class="noRelease">None</span>
+                                }
+                            </td>
+                            <td>
+                                <strong>Duration :</strong> <span class="featureDuration">@feature.getFirstEstimateFormat</span>
+                                @if(SessionController.authorization(EnumMem.PRODUCT_OWNER) && editable){
+                                    <select class="featureDuration none">
+                                        <option @if(feature.getFirstEstimate == EnumFirstEstimate.VERYSHORT){selected} value="Very short duration [-2h]">Very short duration [-2h]</option>
+                                        <option @if(feature.getFirstEstimate == EnumFirstEstimate.SHORT){selected} value="Short duration [2~4h]">Short duration [2~4h]</option>
+                                        <option @if(feature.getFirstEstimate == EnumFirstEstimate.SHORTERTHANAVERAGE){selected} value="Shorter than average duration [4~8h]">Shorter than average duration [4~8h]</option>
+                                        <option @if(feature.getFirstEstimate == EnumFirstEstimate.LONGERTHANAVERAGE){selected} value="Longer than average duration [8~16h]">Longer than average duration [8~16h]</option>
+                                        <option @if(feature.getFirstEstimate == EnumFirstEstimate.LONG){selected} value="Long duration [16~40h]">Long duration [16~40h]</option>
+                                        <option @if(feature.getFirstEstimate == EnumFirstEstimate.VERYLONG){selected} value="Very long duration [+40h]">Very long duration [+40h]</option>
+                                    </select>
+                                    <a class="featureDuration" title="Edit" href="#"><img src="@routes.Assets.versioned(Icon.edit)" width="17" height="17" style="margin-right:5px;"/></a>
+                                }
+                            </td>
+                            <td>
+                                <strong>Priority :</strong> <span class="featurePriority">@feature.getPriorityFormat</span>
+                                @if(SessionController.authorization(EnumMem.PRODUCT_OWNER) && editable){
+                                    <select class="featurePriority none">
+                                        <option @if(feature.getPriority == EnumPriority.VERYLOW){selected } value="Very low">Very low</option>
+                                        <option @if(feature.getPriority == EnumPriority.LOW){selected } value="Low">Low</option>
+                                        <option @if(feature.getPriority == EnumPriority.AVERAGE){selected } value="Average">Average</option>
+                                        <option @if(feature.getPriority == EnumPriority.HIGH){selected } value="High">High</option>
+                                        <option @if(feature.getPriority == EnumPriority.VERYHIGH){selected } value="Very high">Very high</option>
+                                    </select>
+                                    <a class="featurePriority" title="Edit" href="#"><img src="@routes.Assets.versioned(Icon.edit)" width="17" height="17" style="margin-right:5px;"/></a>
+                                }
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-lg-12">
+                    <strong>Description :</strong> <span class='featureDesc'>@feature.getDescription</span>
+                    @if(SessionController.authorization(EnumMem.PRODUCT_OWNER) && editable){
+                        <textarea rows="4" cols="50" class="input featureDesc none">@feature.getDescription</textarea>
+                        <a class="featureDesc" title="Edit" href="#"><img src="@routes.Assets.versioned(Icon.edit)" width="17" height="17" style="margin-right:5px;"/></a>
+                        <div class="error featureDesc"></div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 charts none">
+        <div class="col-lg-6" style="display:inline-block;">
+            <div id="chart1" class=""></div>
+        </div>
+        <div class="col-lg-6" style="display:inline-block;">
+            <div id="chart2" class=""></div>
+        </div>
+
+    </div>
+
+</div>
+        
+
+<div class="modal-footer">
+	<button id="closeModal" type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+    <button id="saveModal" type="button" class="btn btn-primary none" data-dismiss="modal">Save</button>
+</div>
+
+

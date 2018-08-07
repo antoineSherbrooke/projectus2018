@@ -1,0 +1,26 @@
+@import models.Members.EnumMem;
+
+@(user:Users)(member:Members)
+
+@if(!SessionController.isSuperAdministrator()){
+    @base("Profil") {
+        @profil_solo(user)(member)
+    } {
+        <script type="text/javascript" src="@routes.Assets.versioned("javascripts/lib/jcrop.min.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.versioned("javascripts/profil.js")"></script>
+    } {
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/profil.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/lib/jcrop.min.css")">
+    }
+}else{
+    @administrator("Profil") {
+        @profil_solo(user)(member)
+    } {
+        <script type="text/javascript" src="@routes.Assets.versioned("javascripts/administrator.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.versioned("javascripts/lib/jcrop.min.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.versioned("javascripts/profil.js")"></script>
+    } {
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/profil.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/lib/jcrop.min.css")">
+    }
+}

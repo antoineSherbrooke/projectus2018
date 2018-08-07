@@ -1,0 +1,227 @@
+
+.state ul{
+	padding-top:10px;
+}
+
+
+
+
+.edit-progress{
+	height: 21px;
+	border-radius:4px;
+	width: 100%;
+}
+.dropable{
+	padding-left:7px !important;
+	padding-right:7px !important;
+}
+.div-border{
+	border:1px solid #dbdbdb;
+	margin-top:20px;
+	margin-bottom:20px;
+	padding:10px;
+	border-radius:3px;
+	background:white;
+	z-index:0;
+    width: 100%;
+    height:100%;
+}
+
+.div-border h2{
+	font-style:italic
+}
+.item-draggable{
+	min-height:40vh;
+}
+#dialog{
+	background: white;
+	max-width: 500px;
+	left: 50%;
+	position: absolute;
+	margin-top: 200px;
+	margin-left: -250px;
+	width: 100%;
+	padding: 30px;
+	border-radius: 3px;
+	border: 1px solid #ececec;
+}
+
+.item-draggable{
+	list-style-type: none;
+	width:100%;
+	padding:0;
+}
+
+.item-draggable li{
+	background:#455A64;
+	position:relative;
+	color: white;
+	margin:5px;
+	padding:7px;
+	border-radius:3px;
+	cursor:pointer;
+}
+
+.accordion{
+}
+
+.accordion h6{
+	border-bottom:1px solid #c0c0c0;
+	background: #92B0BF;
+	padding:7px;
+	margin:0;
+	border-radius:3px;
+	margin-top:10px;
+}
+
+.accordion .nom_feature{
+    display:inline-flex;
+    width: calc(100% - 40px);
+}
+.accordion h6[doing="true"] {
+	background :#cddc39;
+}
+.accordion h6 img, #accordion h4 img{
+	transition:transform 0.5s;
+	transform: rotate(-90deg);
+	float: right;
+	margin-top: -4px;
+}
+
+#accordion h4 img{
+	margin-top: 2px;
+	margin-right:10px;
+}
+
+.accordion h6.ui-accordion-header-active img, #accordion .ui-accordion-header-active img {
+	transform: rotate(0deg);
+}
+
+.accordion .ui-accordion-header-active{
+	border-radius:0px;
+	border-top-left-radius:3px;
+	border-top-right-radius:3px;
+}
+.accordion div{
+	border:1px solid #c0c0c0;
+	border-bottom-left-radius:3px;
+	border-bottom-right-radius:3px;}
+
+.progress-task{
+	border:0 !important;
+	border-radius:3px;
+	margin-bottom:5px;
+	margin-top:5px;
+}
+.progress-task div{
+	border:0 !important;
+	border-radius:3px;
+}
+
+.dialog-title{
+	border-bottom: 1px solid #eeeeee;
+	margin-bottom: 10px;
+}
+
+.dialog-title h5{
+	color:rgb(0, 73, 37) !important;
+}
+
+.dialog-section .last{
+	margin-bottom:30px;
+}
+.slider{
+	background:#bdbdbd;
+	height:2px;
+	position:relative;
+	margin-top: 12px;
+}
+.slider div{
+	position:absolute;
+	left:0;
+	background:#3367d6;
+	display:block;
+	height:2px;
+	
+}
+.slider span{
+	position:absolute;
+	background:#3367d6;
+	height:15px;
+	width: 15px;
+	border-radius:100%;
+	transition:width 0.5s;
+	top:-6px;
+}
+
+.slider-task div, .slider-task span{
+    background:#ff9800;
+}
+
+.form-group textarea{
+	max-width:100%;
+	width:100%;
+}
+
+.header-comment{
+	border-top: 1px solid rgb(225, 225, 225);
+}
+
+#state-todo li .badge{
+	display:none;
+}
+#state-todo li .progress, #state-done li .progress{
+	display:none;
+}
+#state-doing li .progress-review{
+	display:none;
+}
+#state-toreview li .progress-doing{
+	display:none;
+}
+.btn-slider{
+	padding:0;
+}
+.btn-slider button{
+	padding:0 !important;
+}
+.btn-slider span{
+	text-align:center;
+	border-top: 1px solid gainsboro;
+	border-bottom: 1px solid gainsboro;
+}
+
+.border-accordion {
+    border: 1px solid #C8C8C8;
+}
+
+.ui-accordion-content {
+    width:100% !important;
+}
+
+.ui-accordion-header-active{
+    border-bottom-left-radius:0px;
+    border-bottom-right-radius:0px;
+}
+
+.state-todo #save-task, .state-done #save-task{
+    display:none;
+}
+.remaning{
+    margin:0;
+    margin-top:15px;
+}
+
+.giveUp {
+    float:right;
+}
+
+#divTitleDev {
+    display:inline-block;
+    width:100%;
+}
+
+#btn-take {
+    position:absolute;
+    right:5px;
+}

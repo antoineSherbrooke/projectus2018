@@ -1,0 +1,32 @@
+@(users:List[Users])(member:Members)
+ <!-- Modal content-->
+<span id="memberDonatorId" data="@member.getId"></span>
+ <div class="modal-header">
+ 	<button type="button" class="close" data-dismiss="modal">&times;</button>
+    <div class="modal-title" >
+		<h3>Give the role <span class="bold">@member.getMemberType.toString.replaceAll("_", " ")</span> to another member</h3>
+	</div>
+	 <div class="error-name col-md-12"></div>
+
+</div>
+        
+<div id="" class="modal-body" style="padding-top:0px;">
+    <div id="addUser">
+        <div class="col-md-4">
+            <h6>Choose a member : </h6>
+        </div>
+        <div class="col-md-8">
+            <select class="form-control" id="select-user">
+                @for(user <- users) {
+                <option value="@user.getCip" id="option-user">@user.getFirstName @user.getLastName</option>
+                }
+            </select>
+        </div>
+    </div>
+</div>
+        
+
+<div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	<button type="button" id="btn-give-role" class="btn btn-primary">Add</button>
+</div>      

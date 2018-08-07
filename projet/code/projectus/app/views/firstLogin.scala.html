@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>ProjectUS - FirstLogin</title>
+
+    <!---------Import-------->
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/firstLogin.css")">
+
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+
+    <script src="@routes.Assets.versioned("javascripts/lib/jquery.min.js")"></script>
+    <script src="@routes.Assets.versioned("bootstrap/js/bootstrap.min.js")"></script>
+
+</head>
+<body class="grey-100">
+    <div class="container">
+        <h1>First connexion</h1>
+        <h4>Choose a password</h4>
+        <form action="@routes.ProfilController.changePassword()" method="POST">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Example : l5r84-mp" required/>
+            <label>Valid your password</label>
+            <input type="password" name="validPassword" placeholder="Example : l5r84-mp" required/>
+            <div id="floatRight">
+                <a href="/projectus" class="btn btn-danger">Cancel</a>
+                <input type="submit" class="btn btn-success" value="Send" />
+            </div>
+
+        </form>
+        @if(flash.containsKey("error")){
+            <p style="color:red">@flash.get("error")</p>
+        }
+    </div>
+</body>
+</html>

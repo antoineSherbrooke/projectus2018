@@ -1,0 +1,9 @@
+@*Project Page for Admin/Owner*@
+@(listProjects : List[Project])
+
+@defining(play.core.PlayVersion.current) { version =>
+
+@Projects(listProjects)
+
+	<a href=@routes.ProjectsController.renderAddProject()><button type="submit" id="baddproject"></button></a>
+}

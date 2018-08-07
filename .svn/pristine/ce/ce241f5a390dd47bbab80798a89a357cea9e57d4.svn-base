@@ -1,0 +1,39 @@
+@(users:List[Users])
+ <!-- Modal content-->
+ <div class="modal-header">
+ 	<button type="button" class="close" data-dismiss="modal">&times;</button>
+    <div class="modal-title" >
+		<h3>Add a member</h3>
+	</div>
+	 <div class="error-name col-md-12"></div>
+
+</div>
+        
+<div id="" class="modal-body" style="padding-top:0px;">
+    <div id="addUser">
+        <div class="dialog-title">
+            <h5>Add a new user (Developer)</h5>
+        </div>
+        <div class="raw dialog-section">
+            <div class="col-lg-12">
+                <div class="col-lg-5">First Name :</div>
+                <div class="col-lg-5"><input placeholder="First Name" id="member-first-name" type="text"></div>
+            </div>
+            <div class="col-lg-12">
+                <div class="col-lg-5">Last Name :</div>
+                <div class="col-lg-5"><input placeholder="Last Name" id="member-last-name" type="text"></div>
+            </div>
+            <div class="col-lg-12">
+                <div class="col-lg-5">CIP :</div>
+                <div class="col-lg-5"><input placeholder="CIP" id="member-cip" type="text"></div>
+            </div>
+            <div class="input-error col-md-12"></div>
+        </div>
+    </div>
+</div>
+        
+
+<div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	<button type="button" class="btn btn-primary btn-add-member">Add</button>
+</div>      
