@@ -1,0 +1,29 @@
+@(projects:List[Projects])(id_supervisor:Integer)
+
+@if(!projects.isEmpty()){
+<form action="@routes.AdministratorController.addProjectToSupervisor(id_supervisor)" method="post">
+    <div class="modal-body">
+
+        <div class="col-lg-12">
+            <div class="col-lg-3">Choose a project:</div>
+            <div class="col-lg-9">
+                <select name="project" class="form-control">
+                    @for(project <- projects){
+                    <option value="@project.getId()">@project.getName()</option>
+                    }
+                </select>
+            </div>
+            <p class="error" id="superError2"></p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <input type="submit" id="addProject" title="Add project" type="button" value="Ok" class="btn btn-primary" />
+    </div>
+</form>
+}else{
+    <p class="nofound">You have add all projects to supervisor.</p>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+    </div>
+}

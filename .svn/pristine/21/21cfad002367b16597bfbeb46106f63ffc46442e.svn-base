@@ -1,0 +1,32 @@
+@* Content Profile Page*@
+
+@(user : Users, resume : String, status : String )
+@defining(play.core.PlayVersion.current) { version =>
+
+<div class="profils">
+	<h1>@user.getFirstName()  @user.getLastName.toUpperCase()</h1>
+	<div class="hprofil">
+		<div>		
+			<article>
+				<h2 id="lcip"></h2><h3>:</h3>
+				
+				<p>@user.getCip()</p>
+			</article>
+			<article>
+				<h2 id="lemail"></h2><h3> :</h3>	
+				<p><a href="mailto:@user.getMail()">@user.getMail()</a></p>
+			</article>
+			<article>
+				<h2 id="lstatus"></h1><h3>:</h3>
+				<p>@status</p>
+			</article>
+			<article>
+				<h2 id="lresume"></h2><h3>:</h3>
+			</article>
+			<pre>@resume</pre>
+		</div>
+	
+		<img id="imgprofil" src="@routes.Assets.versioned("images/profile.png")" alt="Profil">
+	</div>
+</div>
+}

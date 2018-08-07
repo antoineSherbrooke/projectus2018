@@ -1,0 +1,16 @@
+@*Content Home Page*@
+
+@(lastArticles : List[Article])
+
+@defining(play.core.PlayVersion.current) { version =>
+
+<div class="content">
+	<h1>Home page</h1>
+	@for(article <- lastArticles){
+		<article>
+			<h2>@article.getTitle()</h2>
+			<p>@article.getId()</p>
+		</article>
+	}	
+</div>
+}

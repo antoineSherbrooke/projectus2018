@@ -1,0 +1,10 @@
+@*Content Home Page*@
+
+@(resume : String, name : String)
+
+@defining(play.core.PlayVersion.current) { version =>
+	<div class="home">
+		<h2>@name</h2>
+		<pre>@resume</pre>
+	</div>
+}

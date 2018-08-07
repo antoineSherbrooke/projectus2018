@@ -1,0 +1,9 @@
+@* Content Profile Page*@
+
+@(user : Users, resume : String, status : String )
+
+@defining(play.core.PlayVersion.current) { version =>
+
+	@Profile(user,resume,status)
+	<a href=@routes.ProfileController.editProfile(user.getCip())><button type="submit" id="bedit"></button></a>
+}

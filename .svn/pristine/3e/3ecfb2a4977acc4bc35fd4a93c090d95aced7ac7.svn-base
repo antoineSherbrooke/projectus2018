@@ -1,0 +1,33 @@
+<!--
+    fichier daemon pour MacOS
+ce fichier doit être dans
+    /Library/LaunchDaemons
+
+pour stopper
+    launchctl stop projectus
+-->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>projectus</string>
+    <key>Program</key>
+    <string>/path/to/script.sh</string>
+    <!-- parametres du script
+    <key>ProgramArguments</key>
+    <array>
+      <string>arg1</string>
+      <string>arg2</string>
+      </array>
+      -->
+    <key>RunAtLoad</key>
+    <true/>
+    <!-- toujours tourner (intervalle de 30s avant de restart)
+    <key>KeepAlive</key>
+    <true/>
+    <key>ThrottleInterval</key>
+    <integer>30</integer>
+    -->
+  </dict>
+</plist>

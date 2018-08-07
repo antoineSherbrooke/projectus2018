@@ -1,0 +1,111 @@
+.flecheDesc {
+  width: 0;
+  height: 0;
+  float:right;
+  margin: 10px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid black;
+}
+.flecheAsc {
+  width: 0;
+  height: 0;
+  float:right;
+  margin: 10px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid black;
+}
+
+.addFeature{
+	width:60px;
+	height:60px;
+	border-radius:50%;
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	font-size:60px;
+}
+
+#content{
+    padding:5px;
+    padding-left:10px;
+    padding-right:10px;
+}
+.table{
+    background:white;
+     border:1px solid #D4D4D4;
+    border-radius:2px;
+    box-shadow:0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12), 0px 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+.col-lg-12{
+    margin-bottom: 10px;
+}
+input, textarea{
+    width:100%;
+}
+
+.noRelease {
+    color : red;
+}
+
+#headFeature th {
+    cursor:pointer;
+}
+
+.featureInfos {
+    visibility:hidden;
+}
+
+#featureTable tbody tr:hover img.featureInfos{
+    visibility:visible;
+}
+
+#featureTableDis tbody tr:hover img.featureInfos{
+    visibility:visible;
+}
+
+#featureTable tbody tr, #featureTableDis tbody tr{
+    cursor:pointer;
+}
+
+#featureTable , #featureTableDis{
+    width:100% !important;
+}
+
+.featureInfos {
+    transition : none
+}
+
+input[type='search'] {
+    width:auto;
+}
+
+.font-25 {
+    font-size:25px !important;
+}
+
+input.featureName{
+    width:auto;
+}
+
+.no-line2 {
+    box-shadow:none !important;
+    border:none !important;
+}
+
+.table td {
+    border:none !important;
+}
+
+th, table.dataTable.no-footer{
+    border:none !important;
+}
+
+.dataTables_filter input{
+    background-color: rgb(233, 224, 224) !important;
+}
+
+.thActions {
+    width:55px !important;
+}

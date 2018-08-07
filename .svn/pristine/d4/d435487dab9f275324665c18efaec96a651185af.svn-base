@@ -1,0 +1,15 @@
+@*Content Conferences & Meetings Page*@
+
+@defining(play.core.PlayVersion.current) { version =>
+
+	<body>
+		<h1 id="lconferencespage"></h1>
+		<searchbar>
+            <form action="" class="formulaire">
+            	<input class="champ" type="text" value=""/>
+                <button class="button" type="button" id="bsearch"></button>        
+            </form>
+		</searchbar>
+	</body>		
+
+}

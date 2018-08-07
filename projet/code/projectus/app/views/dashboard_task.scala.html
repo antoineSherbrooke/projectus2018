@@ -1,0 +1,318 @@
+@import models.SprintTasks.EnumState;
+@import models.Members.EnumMem;
+
+@(task:SprintTasks)(membersTask:MembersTasks)(membersTaskReview:MembersTasksReview)(actions:Boolean)
+
+<section class="state-@task.getState().getLowerCase()">
+ <!-- Modal content-->
+ <div class="modal-header">
+ 	<button type="button" class="close" data-dismiss="modal">&times;</button>
+    <div class="modal-title" >
+    	<h2 class="infoName">@task.getName()</h2>
+    </div>
+</div>
+        
+<div id="@task.getId()" class="modal-body" style="padding-top:0px;">
+
+    <div class="col-md-12" style="padding:0px;">
+        <!-- Description -->
+        <div class="col-md-6">
+            <div class="dialog-title">
+                <h5>Description</h5>
+            </div>
+            <div class="raw dialog-section">
+                <p>@task.getDescription()</p>
+            </div>
+        </div>
+        <!-- Time for task & Estimate Review-->
+        <div class="col-md-6">
+            <div class="dialog-title">
+                <h5>Time for task</h5>
+            </div>
+            <div class="col-md-4">
+                <p>
+                    <b>Start :</b>
+                </p>
+                <p>
+                    @if(task.getStartDate() != null){
+                        @task.dateFormat(task.getStartDate())
+                    }else {
+                        -
+                    }
+                </p>
+            </div>
+            <div class="col-md-4">
+                <p>
+                    <b>End :</b>
+                </p>
+                <p>
+                    @if(task.getEndDate() != null){
+                    @task.dateFormat(task.getEndDate())
+                    }else {
+                    -
+                    }
+                </p>
+            </div>
+
+                <div class="col-md-4">
+                    <p><b>Estimate :</b></p>
+                    <p>@task.timeFormat(task.getEstimate())</p>
+                </div>
+            @if(task.getState() == EnumState.TOREVIEW){
+                <div class="col-md-12" style="padding:0px;">
+                    <div class="col-md-4" style="padding-left:15px">
+                        <p>
+                            <b>Estimate time in review :</b>
+                        </p>
+                    </div>
+                    <div class="col-md-4" style="padding-left:15px">
+                        <p>
+                            @task.timeFormat(task.getEstimateReview())
+                        </p>
+                    </div>
+                 </div>
+            }
+        </div>
+
+
+        <!-- <div class="raw dialog-section"> -->
+        @if((task.getState() == EnumState.DOING || task.getState() == EnumState.TOREVIEW) && SessionController.authorization(EnumMem.DEVELOPER)){
+        <div class="col-md-12" style="padding:0px;">
+            <!-- List of the dev on this task -->
+            <div class="col-md-6">
+        }
+                <div class="dialog-title" id="divTitleDev">
+                    <h5>
+                        Developers working on this task
+                    </h5>
+                </div>
+                @if(!task.getMembersTaskDoings().isEmpty()){
+                    <table class="table table-striped table-hover ">
+                        <thead>
+                            <th></th> <!--colspan="2" -->
+                            <th>Name</th>
+                            <th>Time worked</th>
+                            <th>Part of the development</th>
+                        </thead>
+                        <tbody id="members">
+                            @for(dev <- task.getMembersTaskDoings()) {
+                                <tr>
+                                    <td>
+                                        <img src="@routes.ProfilController.showImageLogo(dev.getMembers().getUser().getCip())"
+                                             class="img-responsive img-circle" height="30" width="30" alt="Happy face" align="middle"/>
+                                    </td>
+                                    <td>
+                                        @dev.getMembers().getAssociations().getUsers().getFirstName() @dev.getMembers().getAssociations().getUsers().getLastName()
+                                    </td>
+                                    @if(dev.getMembers().getId() == SessionController.getMemberId()){
+                                    <td id="own">@task.timeFormat(dev.getTimeSpent())</td>
+                                    }else{
+                                    <td>@task.timeFormat(dev.getTimeSpent())</td>
+                                    }
+                                    <td>Worked on the task</td>
+                                </tr>
+                            }
+                            @for(dev <- task.getMembersTasksReviews()) {
+                                <tr>
+                                    <td>
+                                        <img src="@routes.ProfilController.showImageLogo(dev.getMembers().getUser().getCip())"
+                                             class="img-responsive img-circle" height="30" width="30" alt="Happy face" align="middle"/>
+                                    </td>
+                                    <td>
+                                        @dev.getMembers().getAssociations().getUsers().getFirstName() @dev.getMembers().getAssociations().getUsers().getLastName()
+                                    </td>
+                                    @if(dev.getMembers().getId() == SessionController.getMemberId()){
+                                        <td id="own">@task.timeFormat(dev.getTimeSpent())</td>
+                                    }else{
+                                        <td>@task.timeFormat(dev.getTimeSpent())</td>
+                                    }
+                                    <td>Review the task</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }else{
+                    <div class="well">
+                        No developer have been assign to this task
+                    </div>
+                }
+            @if((task.getState() == EnumState.DOING || task.getState() == EnumState.TOREVIEW ) && SessionController.authorization(EnumMem.DEVELOPER)){
+            </div>
+
+            <!-- Log of hours -->
+            <div class="col-md-6">
+                @if(task.getState() == EnumState.DOING){
+                    @if(membersTask == null ){
+                        <button class="@if(!actions){none} btn btn-warning right marg-top-5" data="@task.getId()" id="btn-take">
+                            Take this task
+                        </button>
+                    }
+                <!-- Log of hours -->
+                <!--for the doing task -->
+                <div id="logHours" class="@if(membersTask == null || !actions){none}">
+                    <div class="col-lg-12">
+                        <p>
+                            <b>Time worked :</b>
+                            <span id="timeWorked">
+                                    @if(membersTask != null){@task.timeFormat(membersTask.getTimeSpent())}else{0 h 00}
+                                </span>
+                        </p>
+                        <div class="col-lg-8 marg-bottom15">
+                            <div class="slider slider-working"/>
+                        </div>
+                        <button class="@if(membersTask == null){none} giveUp btn btn-danger" data="@task.getId" data-state="1">
+                            Give up
+                        </button>
+                    </div>
+                    <div class="col-lg-12"> <!--last-->
+                        <p>
+                            <b>Remaining time :</b>
+                            <span id="remaining">
+                                    @task.timeFormat(task.getRemainingTime()-task.getWorkingTime())
+                                </span>
+                        </p>
+                        <p>
+                        <div class="progress">
+                            <div class="progress-bar progress-remaining"/>
+                        </div>
+                        </p>
+                        <p>
+                        <div data-value="@task.getRemainingTime()" class="timeSetter col-lg-12"/>
+                        </p>
+                    </div>
+                </div>
+                }
+                @if(task.getState() == EnumState.TOREVIEW ){
+                    @if(membersTaskReview == null ){
+                    <button class="@if(!actions){none} btn btn-warning right" data="@task.getId()" id="btn-take">
+                        Take to review
+                    </button>
+                    }
+                <!-- for the review task -->
+                    <div id="logHours" class="@if(membersTaskReview == null || !actions){none}">
+                        <div class="col-lg-12">
+                            <p>
+                                <b>Time worked :</b>
+                                <span id="timeWorked">
+                                    @if(membersTaskReview != null){@task.timeFormat(membersTaskReview.getTimeSpent())}else{0 h 00}
+                                </span>
+                            </p>
+                            <div class="col-lg-8 ">
+                                <div class="slider slider-task slider-working"/>
+                            </div>
+                            <button class="@if(membersTaskReview == null){none} giveUp btn btn-danger" data="@task.getId" data-state="2">
+                                Give UP
+                            </button>
+                        </div>
+                        <div class="col-lg-12">
+                            <p>
+                                <b>Remaining time :</b>
+                                <span id="remaining">
+                                    @task.timeFormat(task.getRemainingTimeReview()-task.getWorkingTimeReview())
+                                </span>
+                            </p>
+                            <p>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-warning progress-remaining"/>
+                                </div>
+                            </p>
+                            <p>
+                                <div data-value="@task.getRemainingTimeReview()" class="timeSetter col-lg-12"/>
+                            </p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        }
+        <!-- </div>-->
+
+
+        <!-- Comments -->
+        <div class="col-lg-12">
+            <div class="dialog-title">
+                <h5>Comments </h5>
+            </div>
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <a data-toggle="collapse" href="#collapse1">
+                        <div class="panel-heading green-bkg rd-border">
+                            <h4 class="panel-title white-txt middle">
+                                Click to add a comment
+                            </h4>
+                        </div>
+                    </a>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <div class="form-group">
+                            <textarea placeholder="Your comment" class="form-control text-com" rows="3" id="textArea"/>
+                            <div class="flex align-right-middle">
+                                <button type="button" id="send" class="btn btn-success add-com" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Tooltip on bottom">
+                                    <img src="@routes.Assets.versioned("images/ic_send.svg")">
+                                </button>
+                            </div>
+                            <div id="comment_error" class="error none"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div id="comments-list">
+                @for(comment <- task.getComments()) {
+                <div class="col-lg-12">
+                    <div>
+                        <span class="bold">
+                            @comment.getMembers().getAssociations().getUsers().getFirstName()
+                        </span>
+                        (@comment.getMembers().getMemberType())
+                        <span class="italic right">@comment.getDateStr()
+                        </span>
+                    </div>
+                    <p class="header-comment">
+                        @comment.getContent()
+                    </p>
+                </div>
+                }
+            </div>
+        </div>
+	</div>
+
+</div>
+        
+
+<div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-primary" id="save-task">Save change</button>
+</div>
+ </section>
+<script type="text/javascript">
+    var remainingTime =0;
+    var workingTimeOthers =0;
+    var workingTime =0;
+
+    @if(task.getState() == EnumState.DOING){
+        remainingTime = @task.getRemainingTime();
+        @if(membersTask != null){
+            workingTime = @membersTask.getTimeSpent()
+            workingTimeOthers = @membersTask.getOthersTimeSpent();
+        } else {
+            workingTime = 0;
+            workingTimeOthers = @task.getWorkingTime();
+        }
+    } else {
+        @if(task.getState() == EnumState.TOREVIEW){
+            remainingTime = @task.getRemainingTimeReview();
+            @if(membersTaskReview != null){
+                workingTime = @membersTaskReview.getTimeSpent()
+                workingTimeOthers = @membersTaskReview.getOthersTimeSpent();
+            } else {
+                workingTime = 0;
+                workingTimeOthers = @task.getWorkingTimeReview();
+            }
+        }
+    }
+</script>
+<script type="text/javascript" src="@routes.Assets.versioned("javascripts/lib/pubsub.js")"></script>
+<script type="text/javascript" src="@routes.Assets.versioned("javascripts/time_setter.js")"></script>
+<script type="text/javascript" src="@routes.Assets.versioned("javascripts/dashboard_task.js")"></script>

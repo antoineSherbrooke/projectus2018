@@ -1,0 +1,27 @@
+@*Header*@
+
+<header>
+	<div class="menu">
+		<a href=@routes.HomeController.home>HOME</a>
+		<a href=@routes.SearchController.search>SEARCH A CV</a>
+		<a href=@routes.EditController.edit>EDIT MY CV</a>
+		<a href="https://www.usherbrooke.ca">UDES</a>
+		<a href=@routes.ContactController.contact>CONTACT</a>
+	</div>
+	<div class="user">
+		@if(session.get("name") != null) {
+			<a href=@routes.LoginController.deconnection>LOGOUT</a>
+		} else {
+		    <a href=@routes.LoginController.formulaire>LOGIN</a>
+		}
+	</div>
+</header>
+
+<div class="messages">
+	@if(flash.containsKey("success")) {
+		<p class="success texte">@flash.get("success")</p>
+	}
+	@if(flash.containsKey("error")) {
+	    <p class="error texte">@flash.get("error")</p>
+	}
+</div>

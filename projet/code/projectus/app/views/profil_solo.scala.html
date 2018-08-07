@@ -1,0 +1,106 @@
+@import models.Members.EnumMem;
+
+@(user:Users)(member:Members)
+<div class="col-lg-12" id="profil">
+    <div class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="col-xs-2 image">
+                    <img  id="image-profil" class="img-responsive img-circle" src="@routes.ProfilController.showImageDark()" /></a>
+                    <div class="btn btn-warning inputfile">
+                        <input id="file" class="file" type="file" accept=".png,.jpg,.jpeg">
+                        <a>Add photo</a>
+                    </div>
+
+                </div>
+                <div class="col-xs-10">
+                    <h3><span class="light">@user.getFirstName() @user.getLastName().toUpperCase()</span></h3>
+                    <h6><span class="bold">Cip : </span>@user.getCip()</h6>
+                </div>
+            </div>
+            <a href="#" class="btn btn-default disabled edit-button" data-toggle="modal" data-target="#dialogEditProfil"><img class="img-responsive" src="@routes.Assets.versioned("images/ic_edit_black.svg")"></a>
+        </div>
+    </div>
+    @if(!SessionController.isSuperAdministrator()){
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Projects</div>
+            <div class="panel-body">
+                <div class="list-group">
+                    @for(project <- SessionController.getListProject()){
+                    <a href="#" class="list-projects list-group-item">
+                        <h6 class="list-group-item-heading">@project.getName()</h6>
+                        <p class="list-group-item-text">@project.getDescription()</p>
+                    </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+
+<div class="modal fade" id="dialogCrop" >
+    <div class="modal-dialog" style="min-width: 70%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Crop image</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-2"><p>Output preview</p>
+                    <div title="Preview" id="preview" class="col-lg-3"></div>
+                </div>
+                <div class="col-lg-10"><img src="" id="target" /></div>
+                <p class="error" id="error"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <input type="submit" id="commit" title="Add release" type="button" value="Save" class="btn btn-primary" />
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="dialogEditProfil">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Edit your profil</h4>
+            </div>
+            <form method="POST" action="@routes.ProfilController.editProfil()" class="formEdit">
+                <div class="modal-body">
+                    <div class="col-lg-12">
+                        <div class="col-lg-4">First Name : </div>
+                        <div class="col-lg-8">
+                            <input type="text" value="@user.getFirstName()" placeholder="Your first name" name="firstName" required>
+                        </div>
+                        <div class="col-lg-4">Last Name : </div>
+                        <div class="col-lg-8">
+                            <input type="text" placeholder="Your last name" value="@user.getLastName()" name="lastName" required/>
+                        </div>
+                        <div class="col-lg-4">Password : </div>
+                        <div class="col-lg-8">
+                            <input type="password" name="password" placeholder="Choose a password">
+                        </div>
+                        <div class="col-lg-4">Password validation : </div>
+                        <div class="col-lg-8">
+                            <input type="password" name="passwordValid" placeholder="Confirm the password">
+                        </div>
+
+                        <p class="error col-lg-12" id="errorEdit"></p>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <input type="submit" title="Add release" type="button" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+

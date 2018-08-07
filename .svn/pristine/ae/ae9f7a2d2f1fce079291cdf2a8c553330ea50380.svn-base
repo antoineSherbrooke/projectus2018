@@ -1,0 +1,22 @@
+@(historys:List[History])
+
+@base("History") {
+<div class="col-lg-12 history">
+    @if(!historys.isEmpty){
+        @for(history <- historys){
+        <div class="panel panel-primary">
+            <div class="panel-heading history-panel-heading">
+                <h3 class="panel-title col-md-12" style="float:none; display:inline-flex">@Html(history.getDescription) <div class="history2">@history.dateFormat(history.getDate)</div></h3>
+            </div>
+        </div>
+        }
+    }else {
+        <p class="nofound">No History</p>
+    }
+</div>
+	
+} {
+
+} {
+	<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/history.css")">
+}

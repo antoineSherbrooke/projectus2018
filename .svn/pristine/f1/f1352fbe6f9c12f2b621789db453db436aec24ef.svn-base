@@ -1,0 +1,9 @@
+@*Password Forgot*@
+
+@(message: String)
+
+@Title(message) {
+	@Header()
+    @ContentPasswordForgot()
+    @Footer()
+}

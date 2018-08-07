@@ -1,0 +1,43 @@
+@* Content EditProfileOwner Page*@
+
+@(user : Users, id : String)(listStatus : List[String])
+@defining(play.core.PlayVersion.current) { version =>
+
+	<h1 id="leditprofilepage"></h1>
+		
+    @helper.form(routes.ProfileController.editProfileFormValidation(id)) {
+    @helper.CSRF.formField
+        <div class="headFormProfil">
+    		<div>
+    		    <div class="champsFormulaire"><h2 id="lfirstname"></h2><input type="text" value=@user.getFirstName() name="firstname"  size="30"></div>
+		        <div class="champsFormulaire"><h2 id="llastname"></h2><input type="text" value=@user.getLastName() name="lastname"  size="30"></div>
+		        <div class="champsFormulaire"><h2 id="lemail"></h2><input type="mail" value=@user.getMail() name="mail"  size="30"></div>
+    			<div class="champsFormulaire"><h2 id="lpassword"></h2><input type="password" name="password"  size="30"></div>
+		        <div class="champsFormulaire"><h2 id="lverifypassword"></h2><input type="password" name="verifPassword" size="30"></div>
+    		</div>
+    		<img id="imgprofil" src="@routes.Assets.versioned("images/profile.png")" alt="Profil">
+    	</div>
+       	<div class="textAreaProfils">
+	        <div class="resumeProfil" >
+	        	<h2 id="lresumeen"></h2>
+	        	<textarea name="resumeEn" rows="8" cols="70">@user.getResumeEn()</textarea>
+	        </div>
+	        <div class="resumeProfil">
+	        	<h2 id="lresumefr"></h2>
+	      	 	<textarea name="resumeFr" rows="8" cols="70">@user.getResumeFr()</textarea>
+	        </div>
+        </div>
+        <div class="champsFormulaireProfil"><h2 id="lstatus"></h2>
+	        <select name="status">
+		        @for(status <- listStatus) {
+		         	<option id="status" value=@status>@status</option>
+		        }
+		    </select>
+        </div>
+        <div class="buttonProfils">
+            <button type="submit" name="send" id="bvalidate" value="send"></button>
+   	   		<button type="submit" name="send" id="bcancel" value="cancel"></button>
+        </div>  
+    }
+
+}

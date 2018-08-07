@@ -1,0 +1,21 @@
+.history-panel-heading {
+    background-color:#298356 !important;
+}
+
+.panel {
+    margin-bottom:10px !important;
+}
+
+.history {
+    margin-top:20px !important;
+}
+
+.history1 {
+    width:80%;
+}
+
+.history2 {
+    width:28%;
+    text-align:right;
+    font-style: italic;
+}
