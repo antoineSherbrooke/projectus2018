@@ -1,0 +1,39 @@
+.admin-container{
+    margin-top:25px;
+}
+
+.paper{
+	width:60px;
+	height:60px;
+	border-radius:50%;
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	font-size:60px;
+}
+.paper img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    min-width: 7px;
+    max-width: 100%;
+    heigth: auto;
+    display: block;
+    width: 30px;
+}
+
+textarea, input[type="text"], select, input[type="email"]{
+    width:100%;
+    max-width:100%;
+    margin-bottom:10px;
+}
+ul {list-style-type: circle;}
+.panel-footer a{
+    color:gray;
+    vertical-align:center;
+}
+.panel-footer img{
+    margin-top:-2px;
+    margin-right:5px;
+}

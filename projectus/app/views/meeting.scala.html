@@ -1,0 +1,202 @@
+@import models.Members.EnumMem;
+
+@(meetings:List[Meetings])(meetingMembers:List[MeetingMembers])
+
+@base("Meetings") {
+
+<br/>
+<div class="col-lg-12">
+    @if(!meetings.isEmpty()){
+    <div class="col-md-6">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h3 class="panel-title">Not started</h3>
+            </div>
+            <div class="panel-body">
+                <div id="panel-not-activate" class="list-group">
+                    @for(meeting <- meetings) {
+                        @if(!meeting.isActivate){
+                            <a href="#" data="@meeting.getId()"  id="span-not-started-@meeting.getId()" class="list-group-item clearfix openModalInfoMeeting list-not-started">
+                                @meeting.getName()
+                                    <span data="@meeting.getId()" class="pull-right">
+                                        @if(!SessionController.isSupervisor()){
+                                            <button href="#" data="@meeting.getId()" class="btn btn-primary btn-sm openModalConcludeMeeting">Conclude</button>
+                                        }
+                                    </span>
+                            </a>
+                        }
+                    }
+                    <p id='no-meeting-activate' class="@if(!MeetingsController.ifNoMeetingStarted(meetings)){none} nofound"> No meeting started !</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Completed</h3>
+            </div>
+            <div class="panel-body">
+                <div class="list-group" id="completed-list">
+                    @for(meeting <- meetings) {
+                        @if(meeting.isActivate){
+                            <a href="#" data="@meeting.getId()" class="list-group-item clearfix openModalInfoMeeting">
+                                @meeting.getName()
+                            </a>
+                        }
+                    }
+                    <p id='no-meeting-completed' class="@if(!MeetingsController.ifNoMeetingCompleted(meetings)){none} nofound"> No meeting completed !</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+    @if(meetings.isEmpty()){
+    <p class="nofound" id="nomeetings">No sprint running.<br />
+        <span class="italic">
+            @if(SessionController.authorization(EnumMem.SCRUM_MASTER)){
+                Please start a sprint to use meetings.
+            }else {
+                The Scrum Master must start a sprint to use meetings.
+            }
+        </span></p>
+    }
+</div>
+
+
+<div class="modal fade" id="dialInfoMeeting">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title-info"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-xs-12">
+                    <div class="col-xs-4">Name : </div>
+                    <div id="name-info" class="col-xs-8"></div>
+                    <div class="col-xs-4">Day order : </div>
+                    <div id="day-order-info" class="col-xs-8"></div>
+                    <div id="meeting-members-info-title" class="col-xs-4">Meeting participants : </div>
+                    <div id="meeting-members-info" class="col-xs-8"></div>
+                    <div id="time-worked-info-title" class="col-xs-4">Time worked : </div>
+                    <div id="time-worked-info" class="col-xs-8"></div>
+                    <div id="conclusion-info-title" class="col-xs-4">Report : </div>
+                    <div id="conclusion-info" class="col-xs-8"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default closeModalInfoMeeting" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="dialAddMeeting">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close close-info" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Add a non-scheduled meeting</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-12">
+                    <div class="col-lg-4">Name : </div>
+                    <div class="col-lg-8">
+                        <input id="meetingName" type="text"name="name">
+                    </div>
+                    <div class="col-lg-4">Day order : </div>
+                    <div class="col-lg-8">
+                        <textarea id="meetingDayOrder"></textarea>
+                    </div>
+                    <div class="col-lg-4">Meeting participants : </div>
+                    <div id="meeting-members-add" class="col-lg-8">
+                    @for(meetingMember <- meetingMembers){
+                        <div class="checkbox">
+                            <label>
+                                <input class="checkboxMember" type="checkbox" value="@meetingMember.getMemberCIP()"> @meetingMember.getName()
+                            </label>
+                        </div>
+                    }
+                    </div>
+
+                    <div class="col-lg-4">Time worked : </div>
+                    <div class="timeSetter col-lg-8"></div>
+
+                    <div class="col-lg-4">Report : </div>
+                    <div class="col-lg-8">
+                        <textarea id="meetingConclusion"></textarea>
+                    </div>
+
+                    <p class="error" id="meetingErrorAdd"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default close-info" data-dismiss="modal">Cancel</button>
+                <button id="okAddMeeting" title="Add meeting" type="button" class="btn btn-primary ">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="dial-conclude-meeting">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close close-info" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 id="title-conclude" class="modal-title">Conclude</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-12">
+                    <div class="col-xs-4">Name : </div>
+                    <div id="meeting-name-conclude" class="col-xs-8">
+                    </div>
+                    <div class="col-xs-4">Day order : </div>
+                    <div id="meeting-day-order-conclude" class="col-xs-8">
+                    </div>
+                    <div class="col-xs-4">Meeting participants : </div>
+                    <div id="meeting-members-conclude" class="col-xs-8">
+                        @for(meetingMember <- meetingMembers){
+                        <div class="checkbox">
+                            <label>
+                                <input class="checkbox-member-conclude" type="checkbox" value="@meetingMember.getMemberCIP()"> @meetingMember.getName()
+                            </label>
+                        </div>
+                        }
+                    </div>
+
+                    <div class="col-xs-4">Time worked : </div>
+                    <div class="timeSetter col-xs-8"></div>
+
+
+                    <div class="col-xs-4">Report : </div>
+                    <div class="col-xs-8">
+                        <textarea id="meeting-conclusion-conclude"></textarea>
+                    </div>
+
+                    <p class="error" id="meetingErrorConclude"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default close-conclude" data-dismiss="modal">Cancel</button>
+                <button id="conclude-meeting" title="Conclude meeting" type="button" class="btn btn-primary">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if(!SessionController.isSupervisor() && !meetings.isEmpty()){
+    <button id="openModalAddMeeting" class="addMeeting btn btn-primary">
+        <img class ="imgAdd" src="@routes.Assets.versioned("images/ic_add_white.svg")" /></button>
+}
+} {
+<script type="text/javascript" src="@routes.Assets.versioned("javascripts/lib/pubsub.js")"></script>
+<script type="text/javascript" src="@routes.Assets.versioned("javascripts/time_setter.js")"></script>
+<script type="text/javascript" src="@routes.Assets.versioned("javascripts/meetings.js")"></script>
+} {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/meeting.css")">
+}

@@ -1,0 +1,19 @@
+@*@(group:Groups)(project:Projects)*@
+@(users:List[Users])(project:Projects)
+
+@base("Team") {
+    @*@team_solo2(group)(project)*@
+	@team_solo(users)(project)
+
+} {
+	<script src="@routes.Assets.versioned("javascripts/lib/highstock.js")"></script>
+	<script src="@routes.Assets.versioned("javascripts/lib/highcharts-no-data.js")"></script>
+	<script type="text/javascript" src="@routes.Assets.versioned("javascripts/team.js")"></script>
+	<script src="@routes.Assets.versioned("javascripts/lib/highcharts-exporting.js")"></script>
+	<script src="@routes.Assets.versioned("dataTables/datatables.min.js")"></script>
+
+} {
+	<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/team.css")">
+	<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("dataTables/datatables.min.css")">
+	  <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/lib/jquery-ui.min.css")">
+}

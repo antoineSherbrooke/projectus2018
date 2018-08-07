@@ -1,0 +1,78 @@
+@*Content Team Page*@
+
+@(Amembres : List[Users],Lmembres : List[Users],Nmembres : List[Users])
+
+@defining(play.core.PlayVersion.current) { version =>
+
+    <h1 id="leditteampage"></h1>
+    <div class="teamMembers">
+        
+        <div class ="activeMembers">
+            <h2 id="lactualmembers"></h2>
+            @for(membre <- Amembres){
+                <div class="members">
+                    <a href=@routes.ProfileController.profile(membre.getCip()) class="userTeam">@membre.getFirstName() @membre.getLastName()</a>
+                    <div class="LbuttonTeam">
+                        <div class="divButtonTeam">
+                            <a href=@routes.TeamController.PostDesactivateUserTeam(membre.getCip()) class="button_Team">
+                                <div class="minus_icon">
+                                </div>
+                            </a>
+                            <p id="bdeactivate"></p>
+                        </div>
+
+                        <div class="divButtonTeam">
+                            <a href=@routes.TeamController.DeleteUserTeam(membre.getCip()) class="button_Team">
+                                <div class="trash_icon"></div>
+                            </a>
+                            <p id="bremove"></p>
+                        </div>
+
+                    </div>
+                </div>
+
+            }
+        </div>
+        <div class ="activeMembers">
+            <h2 id="lpastmembers"></h2>
+            @for(membre <- Lmembres){
+                <div class="members">
+                    <a href=@routes.ProfileController.profile(membre.getCip()) class="userTeam">@membre.getFirstName() @membre.getLastName()</a>
+                    <div class="LbuttonTeam">
+                        <div class="divButtonTeam">
+                            <a href=@routes.TeamController.PostActivateUserTeam(membre.getCip()) class="button_Team">
+                                <div class="plus_icon"></div>
+                            </a>
+                            <p id="bactivate"></p>
+                        </div>
+
+                        <div class="divButtonTeam">
+                            <a href=@routes.TeamController.DeleteUserTeam(membre.getCip()) class="button_Team">
+                                <div class="trash_icon"></div>
+                            </a>
+                            <p id="bremove"></p>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    
+        
+        <div class ="activeMembers">
+            <h2 id="lnonemembers"></h2>
+			@helper.form(routes.TeamController.postAddUserTeam()) {
+			@helper.CSRF.formField
+			<select id="cip" name="cip">
+				@for(membre <- Nmembres){
+						<option>
+							@membre.getCip()
+						</option>
+					}
+			</select>
+			<button type="submit" id="baddmember" name="send" value="send"></button>
+			}
+        </div>
+    </div>
+        
+}

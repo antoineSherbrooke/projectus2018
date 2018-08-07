@@ -1,0 +1,12 @@
+@*AddProject Page for Admin/Owner*@
+
+@defining(play.core.PlayVersion.current) { version =>
+
+	<h1 id="laddprojectpage"></h1>
+	@helper.form(routes.ProjectsController.addProjects()) {
+    @helper.CSRF.formField
+    	<div class="champFormulaire"><h2 id="lprojectname"></h2><input type="text" name="name"></div>
+        <button type="submit" id="bvalidate"></button>
+	}
+
+}
